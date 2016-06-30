@@ -31,6 +31,21 @@ export const <%= entityClass %>Action={
 
     });
   },
+    update:function ({ dispatch },data,success,error) {
+        console.log("save <%= entityInstance %> ..");
+        <%= entityClass %>Api.update(data).then(function (response) {
+                console.log("save <%= entityInstance %> success");
+                dispatch(Types.<%= entityInstanceUp %>_SAVE_SUCCESS,response.data);
+                if(success){
+                    success(response.data);
+                }
+            },function (response) {
+                if(error){
+                    error(response.data);
+                }
+
+            });
+    },
   delete:function ({ dispatch },id,success,error) {
     console.log("delete <%= entityInstance %> "+id);
       <%= entityClass %>Api.delete(id).then(function (response) {

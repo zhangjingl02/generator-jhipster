@@ -17,6 +17,10 @@ const mutations = {
     console.log("save <%= entityInstance %> success:"+data);
     state.<%= entityInstance %>List.unshift(data)
   },
+[<%= entityInstanceUp %>_UPDATE_SUCCESS] (state, data) {
+    console.log("save <%= entityInstance %> update:"+data);
+    //state.<%= entityInstance %>List.unshift(data)
+},
   [<%= entityInstanceUp %>_LIST_SUCCESS] (state, data) {
     console.log("list <%= entityInstance %> success!!!");
     state.<%= entityInstance %>List=data;

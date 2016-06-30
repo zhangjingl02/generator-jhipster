@@ -6,6 +6,9 @@ export const <%= entityClass %>Api={
   save:function (data) {
     return <%= entityClass %>Resource.save(data);
   },
+    update:function (data) {
+        return <%= entityClass %>Resource.update(data);
+    },
   delete:function (data) {
     return <%= entityClass %>Resource.delete({id:data});
   }

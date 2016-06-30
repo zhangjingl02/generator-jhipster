@@ -106,12 +106,13 @@
             <%= fieldName %>:'',
         <%_ } _%>
 
-
+        }
       }
     },
     vuex:{
     actions:{
       saveAct:<%= entityClass %>Action.save,
+        updateAct:<%= entityClass %>Action.update,
     }
   },
     methods: {
@@ -123,7 +124,13 @@
         }
 
         $("#btn-save").button('loading');
-        this.saveAct(this.<%= entityInstance %>,function (res) {
+          var saveFunc=this.saveAct;
+          if(this.<%= entityInstance %>.id!=null){
+              saveFunc=this.updateAct;
+          }
+
+
+        saveFunc(this.<%= entityInstance %>,function (res) {
             console.log(res.data);
             $("#btn-save").button('reset');
             me.$refs.palert.show("保存成功",'success');
