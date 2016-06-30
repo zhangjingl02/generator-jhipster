@@ -14,6 +14,7 @@ const constants = require('../generator-constants'),
     CLIENT_MAIN_SRC_DIR = constants.CLIENT_MAIN_SRC_DIR,
     CLIENT_TEST_SRC_DIR = constants.CLIENT_TEST_SRC_DIR,
     ANGULAR_DIR = constants.ANGULAR_DIR,
+    VUE_DIR = constants.VUE_DIR,
     SERVER_MAIN_SRC_DIR = constants.SERVER_MAIN_SRC_DIR,
     SERVER_MAIN_RES_DIR = constants.SERVER_MAIN_RES_DIR,
     TEST_DIR = constants.TEST_DIR,
@@ -399,11 +400,13 @@ module.exports = EntityGenerator.extend({
             this.entityClassPlural = pluralize(this.entityClass);
             this.entityClassPluralHumanized = _.startCase(this.entityClassPlural);
             this.entityInstance = _.lowerFirst(this.name);
+            this.entityInstanceUp = this.name.toUpperCase();
             this.entityInstancePlural = pluralize(this.entityInstance);
             this.entityApiUrl = entityNamePluralizedAndSpinalCased;
             this.entityFolderName = entityNameSpinalCased;
             this.entityFileName = entityNameSpinalCased + this.entityAngularJSSuffix;
             this.entityPluralFileName = entityNamePluralizedAndSpinalCased + this.entityAngularJSSuffix;
+            this.entityPluralFileNameVue = entityNamePluralizedAndSpinalCased;
             this.entityServiceFileName = entityNameSpinalCased;
             this.entityAngularJSName = this.entityClass + _.upperFirst(_.camelCase(this.entityAngularJSSuffix));
             this.entityStateName = entityNameSpinalCased + this.entityAngularJSSuffix;
@@ -684,13 +687,14 @@ module.exports = EntityGenerator.extend({
             if (this.skipClient) {
                 return;
             }
+           //this.copyHtml(VUE_DIR + 'entities/_entity.action.js', VUE_DIR + 'entities/' + this.entityFolderName + '/' + this.entityPluralFileNameVue + '.js', this, {}, true);
             this.copyHtml(ANGULAR_DIR + 'entities/_entity-management.html', ANGULAR_DIR + 'entities/' + this.entityFolderName + '/' + this.entityPluralFileName + '.html', this, {}, true);
             this.copyHtml(ANGULAR_DIR + 'entities/_entity-management-detail.html', ANGULAR_DIR + 'entities/' + this.entityFolderName + '/' + this.entityFileName + '-detail.html', this, {}, true);
             this.copyHtml(ANGULAR_DIR + 'entities/_entity-management-dialog.html', ANGULAR_DIR + 'entities/' + this.entityFolderName + '/' + this.entityFileName + '-dialog.html', this, {}, true);
             this.copyHtml(ANGULAR_DIR + 'entities/_entity-management-delete-dialog.html', ANGULAR_DIR + 'entities/' + this.entityFolderName + '/' + this.entityFileName + '-delete-dialog.html', this, {}, true);
 
             this.addEntityToMenu(this.entityStateName, this.enableTranslation);
-
+            this.template(VUE_DIR + 'entities/_entity.action.js', VUE_DIR + 'entities/' + this.entityFolderName + '/' + this.entityFileName + '.action.js', this, {}, true);
             this.template(ANGULAR_DIR + 'entities/_entity-management.state.js', ANGULAR_DIR + 'entities/' + this.entityFolderName + '/' + this.entityFileName + '.state.js', this, {});
             this.template(ANGULAR_DIR + 'entities/_entity-management.controller.js', ANGULAR_DIR + 'entities/' + this.entityFolderName + '/' + this.entityFileName + '.controller' + '.js', this, {});
             this.template(ANGULAR_DIR + 'entities/_entity-management-dialog.controller.js', ANGULAR_DIR + 'entities/' + this.entityFolderName + '/' + this.entityFileName + '-dialog.controller' + '.js', this, {});
@@ -769,6 +773,7 @@ module.exports = EntityGenerator.extend({
                         entityClass: this.entityClass,
                         entityTableName: this.entityTableName,
                         entityInstance: this.entityInstance,
+                        entityInstanceUp: this.entityInstance.toUpperCase(),
                         entityFolderName: this.entityFolderName,
                         entityFileName: this.entityFileName,
                         entityServiceFileName: this.entityServiceFileName,
