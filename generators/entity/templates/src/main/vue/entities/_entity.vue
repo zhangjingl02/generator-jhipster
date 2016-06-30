@@ -1,4 +1,5 @@
 <template>
+    <app-modal id='<%= entityInstance %>Modal' type="warning" title="" footer="hidden" v-ref:<%= entityInstance %>_modal>
   <div class="x_panel">
     <div class="x_title">
       <h2><%= entityClass %> Infomation
@@ -26,36 +27,40 @@
             validators.push('required:true');
             }
             if (rules.indexOf('minlength') != -1) {
-            validators.push('minlength="' + field.fieldValidateRulesMinlength + '"');
+            validators.push('minlength:' + field.fieldValidateRulesMinlength);
             }
             if (rules.indexOf('maxlength') != -1) {
-            validators.push('ng-maxlength="' + field.fieldValidateRulesMaxlength + '"');
+            validators.push('maxlength:' + field.fieldValidateRulesMaxlength );
             }
             if (rules.indexOf('min') != -1) {
-            validators.push('min="' + field.fieldValidateRulesMin + '"');
+            //validators.push('min="' + field.fieldValidateRulesMin + '"');
             }
             if (rules.indexOf('max') != -1) {
-            validators.push('max="' + field.fieldValidateRulesMax + '"');
+            //validators.push('max="' + field.fieldValidateRulesMax + '"');
             }
             if (rules.indexOf('minbytes') != -1) {
-            validators.push('minbytes="' + field.fieldValidateRulesMinbytes +'"');
+            //validators.push('minbytes="' + field.fieldValidateRulesMinbytes +'"');
             }
             if (rules.indexOf('maxbytes') != -1) {
-            validators.push('maxbytes="' + field.fieldValidateRulesMaxbytes +'"');
+            //validators.push('maxbytes="' + field.fieldValidateRulesMaxbytes +'"');
             }
             if (rules.indexOf('pattern') != -1) {
-            validators.push('ng-pattern="/' + field.fieldValidateRulesPattern + '/"');
+            validators.push('pattern:/' + field.fieldValidateRulesPattern + '/');
             }
 
-            result = validators.join(' ');
+            var result = validators.join(',');
+            var isvalidator = (validators.length);
             }
 
             _%>
             <div class="form-group">
                 <label class="control-label col-md-2 col-sm-2 col-xs-12"><%= fieldName %></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" class="form-control" placeholder="<%= fieldName %>" v-model="<%= fieldName %>"
-                           initial="off" v-error="$productValidator.<%= fieldName %>"       v-validate:<%= fieldName %>="{ required: true, minlength: 4,maxlength:12 }">
+                    <input type="text" class="form-control" placeholder="<%= fieldName %>" v-model="<%= entityInstance %>.<%= fieldName %>"
+                           <%_ if( isvalidator ) { _%>
+                           initial="off" v-error="$productValidator.<%= fieldName %>"       v-validate:<%= entityInstance %>.<%= fieldName %>="{ <%= result %>}"
+                           <%_ } _%>
+                    >
                     <p v-if="$productValidator.no.invalid" class="text-danger">请输入4-12个字符,只能用字母和数字</p>
                 </div>
             </div>
@@ -82,16 +87,18 @@
       </div>
     </div>
   </div>
-
+</app-modal>
 </template>
 
 <script>
 
-
+    import {<%= entityClass %>Action} from './<%= entityInstance %>.action'
   export default{
     data(){
       return {
         <%= entityInstance %>:{
+
+        id:null,
         <%_ for (idx in fields) {
         var fieldName = fields[idx].fieldName;
         var fieldType = fields[idx].fieldType;
@@ -99,7 +106,7 @@
             <%= fieldName %>:'',
         <%_ } _%>
 
-           }
+
       }
     },
     vuex:{
@@ -114,38 +121,25 @@
         if (this.$<%= entityInstance %>Validator.invalid) {
           return;
         }
-        var attrs = [];
-        var p = {
-          id: null,
-          name: me.name,
-          price: me.price,
-          count: me.count,
-          no: me.no,
-          attributes: attrs,
-          materials:[]
-        };
 
         $("#btn-save").button('loading');
-        this.saveAct(product).then(function (res) {
-          console.log(res.data);
-          $("#btn-save").button('reset');
-          me.$refs.palert.show("保存成功",'success');
+        this.saveAct(this.<%= entityInstance %>,function (res) {
+            console.log(res.data);
+            $("#btn-save").button('reset');
+            me.$refs.palert.show("保存成功",'success');
         },function(res){
             $("#btn-save").button('reset');
             me.$refs.palert.show("保存失败",'danger');
         }
-      });
+      )
 
       },
-      init: function (item) {
-        this.id = item.id;
-        this.name = item.name;
-        this.address = item.address;
-        this.tel = item.tel;
-        this.contacts = item.contacts;
+      edit: function (item) {
+          this.<%= entityInstance %>=item;
+          this.$refs.<%= entityInstance %>_modal.show();
       },
       close: function () {
-        this.$parent.hide();
+          this.$refs.<%= entityInstance %>_modal.hide();
       }
     },
     ready: function () {

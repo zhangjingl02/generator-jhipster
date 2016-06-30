@@ -1145,7 +1145,7 @@ Generator.prototype.printJHipsterLogo = function () {
         chalk.green('        ██') + chalk.red('  ██    ██     ██     ██    ██  ██          ██     ██        ██    ██\n') +
         chalk.green('        ██') + chalk.red('  ████████     ██     ███████    █████      ██     ██████    ███████\n') +
         chalk.green('  ██    ██') + chalk.red('  ██    ██     ██     ██             ██     ██     ██        ██   ██\n') +
-        chalk.green('   ██████ ') + chalk.red('  ██    ██  ████████  ██        ██████      ██     ████████  ██    ██\n')
+        chalk.green('   ███____███ ') + chalk.red('  ██    ██  ████████  ██        ██████      ██     ████████  ██    ██\n')
     );
     this.log(chalk.white.bold('                            http://jhipster.github.io\n'));
     if (this.checkInstall) this.checkForNewVersion();

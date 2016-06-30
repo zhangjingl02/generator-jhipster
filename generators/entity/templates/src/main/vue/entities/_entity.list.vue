@@ -5,7 +5,7 @@
         <small></small>
       </h2>
       <ul class="nav navbar-right panel_toolbox">
-        <li><a class="collapse-link" href="#product"><i class="fa fa-plus"></i></a>
+        <li><button class="collapse-link" data-toggle="modal" data-target="#<%= entityInstance %>Modal"><i class="fa fa-plus"></i></button>
         </li>
 
       </ul>
@@ -52,19 +52,14 @@
 
     </div>
   </div>
-
-
-  <app-modal id='productModal' type="warning" title="" footer="hidden" size="lg">
-    <update-product></update-product>
-  </app-modal>
-
+    <update-<%= entityInstance %> v-ref:<%= entityInstance %>_update></update-<%= entityInstance %>>
 </template>
 
 <script>
 
 
-  import UpateProduct from './<%= entityInstance %>.vue'
-  import {ProductAction} from './<%= entityInstance %>.action'
+  import Upate<%= entityClass %> from './<%= entityInstance %>.vue'
+  import {<%= entityClass %>Action} from './<%= entityInstance %>.action'
   export default{
 
     data () {
@@ -82,13 +77,15 @@
     }
   },
   components:{
-    'update-product':UpateProduct
+    'update-<%= entityInstance %>':Upate<%= entityClass %>
   },
   methods:{
-
+    edit:function(item){
+        this.$refs.<%= entityInstance %>_update.edit(item);
+    }
   },
   ready: function () {
-    this.list();
+    this.listAct();
   }
 
   }
