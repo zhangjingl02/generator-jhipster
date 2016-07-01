@@ -43,13 +43,13 @@
           </td>
         </tr>
         <tr v-if="<%= entityInstance %>List.length==0">
-          <td class="text-center" colspan="6">
+          <td class="text-center" colspan="<%=fields.length+1 %>">
             暂无数据!
           </td>
         </tr>
         </tbody>
       </table>
-
+        <pagination v-bind:links="links" page="pagination.page" v-bind:change="query"></pagination>
     </div>
   </div>
     <update-<%= entityInstance %> v-ref:<%= entityInstance %>_update></update-<%= entityInstance %>>
@@ -64,12 +64,19 @@
 
     data () {
       return {
-
+          links:{},
+          pagination:{
+              page: 0,
+              sort: '',
+              search: '',
+          },
       }
     },
     vuex:{
       getters:{
-      <%= entityInstance %>List: ({<%= entityInstance %>Modules}) => <%= entityInstance %>Modules.<%= entityInstance %>List,
+      <%= entityInstance %>List: function({<%= entityInstance %>Modules}) {
+      return <%= entityInstance %>Modules.<%= entityInstance %>List;
+      }
     },
     actions:{
       listAct:<%= entityClass %>Action.list,
@@ -82,7 +89,13 @@
   methods:{
     edit:function(item){
         this.$refs.<%= entityInstance %>_update.edit(item);
-    }
+    },
+      query:function () {
+          var me=this;
+          this.listAct(this.pagination,function (res) {
+              me.links=PaginationUtil.parse(res.headers('link'));
+          });
+      }
   },
   ready: function () {
     this.listAct();

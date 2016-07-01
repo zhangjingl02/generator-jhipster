@@ -126,6 +126,7 @@
         $("#btn-save").button('loading');
           var saveFunc=this.saveAct;
           if(this.<%= entityInstance %>.id!=null){
+              console.log("update");
               saveFunc=this.updateAct;
           }
 

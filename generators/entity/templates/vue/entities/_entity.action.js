@@ -3,15 +3,15 @@ import * as Types from './<%= entityInstance %>.type'
 
 export const <%= entityClass %>Action={
   list:function ({ dispatch },data,success,error) {
-      <%= entityClass %>Api.list().then(function (response) {
+      <%= entityClass %>Api.list(data).then(function (response) {
       console.log("list <%= entityInstance %> success");
       dispatch(Types.<%= entityInstanceUp %>_LIST_SUCCESS,response.data);
       if(success){
-          success(response.data);
+          success(response);
       }
       },function (response) {
           if(error){
-              error(response.data);
+              error(response);
           }
 
       });
@@ -22,11 +22,11 @@ export const <%= entityClass %>Action={
       console.log("save <%= entityInstance %> success");
       dispatch(Types.<%= entityInstanceUp %>_SAVE_SUCCESS,response.data);
       if(success){
-          success(response.data);
+          success(response);
       }
     },function (response) {
        if(error){
-           error(response.data);
+           error(response);
        }
 
     });
@@ -35,13 +35,13 @@ export const <%= entityClass %>Action={
         console.log("save <%= entityInstance %> ..");
         <%= entityClass %>Api.update(data).then(function (response) {
                 console.log("save <%= entityInstance %> success");
-                dispatch(Types.<%= entityInstanceUp %>_SAVE_SUCCESS,response.data);
+                dispatch(Types.<%= entityInstanceUp %>_UPDATE_SUCCESS,response.data);
                 if(success){
-                    success(response.data);
+                    success(response);
                 }
             },function (response) {
                 if(error){
-                    error(response.data);
+                    error(response);
                 }
 
             });
@@ -52,11 +52,11 @@ export const <%= entityClass %>Action={
       console.log("delete <%= entityInstance %> success");
       dispatch(Types.<%= entityInstanceUp %>_DELETE_SUCCESS,id);
       if(success){
-          success(response.data);
+          success(response);
       }
   },function (response) {
       if(error){
-          error(response.data);
+          error(response);
       }
 
   });

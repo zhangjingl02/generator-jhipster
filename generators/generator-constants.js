@@ -36,7 +36,7 @@ const constants = {
     CLIENT_TEST_SRC_DIR: TEST_DIR + 'javascript/',
     CLIENT_DIST_DIR: CLIENT_DIST_DIR,
     ANGULAR_DIR: MAIN_DIR + 'webapp/app/',
-    VUE_DIR: MAIN_DIR+'vue/',
+    VUE_DIR: 'vue/',
     SERVER_MAIN_SRC_DIR: MAIN_DIR + 'java/',
     SERVER_MAIN_RES_DIR: MAIN_DIR + 'resources/',
     SERVER_TEST_SRC_DIR: TEST_DIR + 'java/',
