@@ -1,5 +1,5 @@
 <template>
-    <app-modal id='<%= entityInstance %>Modal' type="warning" title="" footer="hidden" v-ref:<%= entityInstance %>_modal>
+    <app-modal id='<%= entityInstance %>Modal' type="warning" title="" footer="hidden" v-ref:<%= entityInstanceKebab %>_modal>
   <div class="x_panel">
     <div class="x_title">
       <h2><%= entityClass %> Infomation
@@ -17,6 +17,7 @@
             <%_ for (idx in fields) {
             var fieldName = fields[idx].fieldName;
             var fieldType = fields[idx].fieldType;
+            var fieldValidate = fields[idx].fieldValidate;
             var fieldTypeBlobContent = fields[idx].fieldTypeBlobContent;
             var field=fields[idx];
             if (field.fieldValidate == true) {
@@ -49,7 +50,6 @@
             }
 
             var result = validators.join(',');
-            var isvalidator = (validators.length);
             }
 
             _%>
@@ -144,10 +144,10 @@
       },
       edit: function (item) {
           this.<%= entityInstance %>=item;
-          this.$refs.<%= entityInstance %>_modal.show();
+          this.$refs.<%= entityInstanceKebab %>_modal.show();
       },
       close: function () {
-          this.$refs.<%= entityInstance %>_modal.hide();
+          this.$refs.<%= entityInstanceKebab %>_modal.hide();
       }
     },
     ready: function () {
