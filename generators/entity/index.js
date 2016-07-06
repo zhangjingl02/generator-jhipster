@@ -401,6 +401,7 @@ module.exports = EntityGenerator.extend({
             this.entityClassPluralHumanized = _.startCase(this.entityClassPlural);
             this.entityInstance = _.lowerFirst(this.name);
             this.entityInstanceUp = this.name.toUpperCase();
+            this.entityInstanceKebab = _.kebabCase(this.name);
             this.entityInstancePlural = pluralize(this.entityInstance);
             this.entityApiUrl = entityNamePluralizedAndSpinalCased;
             this.entityFolderName = entityNameSpinalCased;
@@ -746,13 +747,13 @@ module.exports = EntityGenerator.extend({
     },
 
     install: function () {
-        var injectJsFilesToIndex = function () {
-            this.log('\n' + chalk.bold.green('Running gulp Inject to add javascript to index\n'));
-            this.spawnCommand('gulp', ['inject:app']);
-        };
-        if (!this.options['skip-install'] && !this.skipClient) {
-            injectJsFilesToIndex.call(this);
-        }
+        // var injectJsFilesToIndex = function () {
+        //     this.log('\n' + chalk.bold.green('Running gulp Inject to add javascript to index\n'));
+        //     this.spawnCommand('gulp', ['inject:app']);
+        // };
+        // if (!this.options['skip-install'] && !this.skipClient) {
+        //     injectJsFilesToIndex.call(this);
+        // }
     },
 
     end: {
@@ -780,6 +781,7 @@ module.exports = EntityGenerator.extend({
                         entityClass: this.entityClass,
                         entityTableName: this.entityTableName,
                         entityInstance: this.entityInstance,
+                        entityInstanceKebab:this.entityInstanceKebab,
                         entityInstanceUp: this.entityInstance.toUpperCase(),
                         entityFolderName: this.entityFolderName,
                         entityFileName: this.entityFileName,
