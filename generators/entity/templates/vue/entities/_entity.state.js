@@ -4,7 +4,7 @@ import {
 <%= entityInstanceUp %>_UPDATE_SUCCESS,
 <%= entityInstanceUp %>_LIST_SUCCESS,
 <%= entityInstanceUp %>_DELETE_SUCCESS
-} from './<%= entityInstance %>.type'
+} from './<%= entityFileName %>.type'
 
 
 // initial state

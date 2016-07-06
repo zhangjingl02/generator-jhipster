@@ -92,7 +92,7 @@
 
 <script>
 
-    import {<%= entityClass %>Action} from './<%= entityInstance %>.action'
+    import {<%= entityClass %>Action} from './<%= entityFileName %>.action'
   export default{
     data(){
       return {

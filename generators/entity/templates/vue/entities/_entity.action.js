@@ -1,5 +1,5 @@
-import {<%= entityClass %>Api} from './<%= entityInstance %>.api'
-import * as Types from './<%= entityInstance %>.type'
+import {<%= entityClass %>Api} from './<%= entityFileName %>.api'
+import * as Types from './<%= entityFileName %>.type'
 
 export const <%= entityClass %>Action={
   list:function ({ dispatch },data,success,error) {

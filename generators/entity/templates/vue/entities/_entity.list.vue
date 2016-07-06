@@ -58,8 +58,8 @@
 <script>
 
 
-  import Upate<%= entityClass %> from './<%= entityInstance %>.vue'
-  import {<%= entityClass %>Action} from './<%= entityInstance %>.action'
+  import Upate<%= entityClass %> from './<%= entityFileName %>.vue'
+  import {<%= entityClass %>Action} from './<%= entityFileName %>.action'
   export default{
 
     data () {
