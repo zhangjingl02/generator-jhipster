@@ -52,7 +52,7 @@
         <pagination v-bind:links="links" page="pagination.page" v-bind:change="query"></pagination>
     </div>
   </div>
-    <update-<%= entityInstanceKebab %> v-ref:<%= entityInstanceKebab %>_update></update-<%= entityInstanceKebab %>>
+    <update-<%= entityInstanceKebab %> v-ref:<%= entityInstanceSnake %>_update></update-<%= entityInstanceKebab %>>
 </template>
 
 <script>
@@ -88,7 +88,7 @@
   },
   methods:{
     edit:function(item){
-        this.$refs.<%= entityInstanceKebab %>_update.edit(item);
+        this.$refs.<%= entityInstanceSnake %>_update.edit(item);
     },
       query:function () {
           var me=this;

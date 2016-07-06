@@ -1,4 +1,4 @@
-import {<%= entityClass %>Resource} from '../../api/resources'
+import {<%= entityClass %>Resource} from '../../api/resourcesa'
 export const <%= entityClass %>Api={
   list:function (data) {
     return <%= entityClass %>Resource.get(data);

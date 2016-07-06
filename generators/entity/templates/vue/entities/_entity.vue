@@ -1,5 +1,5 @@
 <template>
-    <app-modal id='<%= entityInstance %>Modal' type="warning" title="" footer="hidden" v-ref:<%= entityInstanceKebab %>_modal>
+    <app-modal id='<%= entityInstance %>Modal' v-bind:evts='evts' v-bind:save='save' type="warning" title="" v-ref:<%= entityInstanceSnake %>_modal>
   <div class="x_panel">
     <div class="x_title">
       <h2><%= entityClass %> Infomation
@@ -20,7 +20,9 @@
             var fieldValidate = fields[idx].fieldValidate;
             var fieldTypeBlobContent = fields[idx].fieldTypeBlobContent;
             var field=fields[idx];
+            var fieldValdate=0;
             if (field.fieldValidate == true) {
+            fieldValdate=1;
             var rules = field.fieldValidateRules;
             var validators = [];
 
@@ -57,36 +59,22 @@
                 <label class="control-label col-md-2 col-sm-2 col-xs-12"><%= fieldName %></label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input type="text" class="form-control" placeholder="<%= fieldName %>" v-model="<%= entityInstance %>.<%= fieldName %>"
-                           <%_ if( isvalidator ) { _%>
+                           <%_ if( fieldValdate==1 ) { _%>
                            initial="off" v-error="$productValidator.<%= fieldName %>"       v-validate:<%= entityInstance %>.<%= fieldName %>="{ <%= result %>}"
                            <%_ } _%>
                     >
-                    <p v-if="$productValidator.no.invalid" class="text-danger">请输入4-12个字符,只能用字母和数字</p>
                 </div>
             </div>
+            <div class="ln_solid"></div>
             <%_ } _%>
 
 
         </validator>
 
-        <div class="ln_solid"></div>
-        <div class="form-group">
-          <div class="col-md-4 col-sm-4 col-xs-6 col-md-offset-3">
-            <alert text="保存成功" v-ref:palert></alert>
-          </div>
-
-        </div>
-
-        <div class="form-group">
-          <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-            <a href="#<%= entityInstance %>-list" class="btn btn-primary" @click="close">关闭</a>
-            <button id="btn-save" class="btn btn-success" @click="save" data-loading-text='保存中'>保存</button>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
+    <alert text="保存成功" v-ref:palert></alert>
 </app-modal>
 </template>
 
@@ -96,6 +84,7 @@
   export default{
     data(){
       return {
+        isNew:true,
         <%= entityInstance %>:{
 
         id:null,
@@ -114,9 +103,24 @@
       saveAct:<%= entityClass %>Action.save,
         updateAct:<%= entityClass %>Action.update,
     }
-  },
+  }, computed:{
+        evts:function () {
+            var me=this;
+            return {
+                show:function (e) {
+                    console.log('show.evt2');
+                    if(me.isNew){
+                        me.<%= entityInstance %>={};
+                    }
+                },
+                hide:function (e) {
+                    console.log('hide.evt');
+                    me.isNew=true;
+                },
+            }
+        }
+    },
     methods: {
-
       save: function () {
         var me = this;
         if (this.$<%= entityInstance %>Validator.invalid) {
@@ -144,10 +148,11 @@
       },
       edit: function (item) {
           this.<%= entityInstance %>=item;
-          this.$refs.<%= entityInstanceKebab %>_modal.show();
+          this.isNew=false;
+          this.$refs.<%= entityInstanceSnake %>_modal.show();
       },
       close: function () {
-          this.$refs.<%= entityInstanceKebab %>_modal.hide();
+          this.$refs.<%= entityInstanceSnake %>_modal.hide();
       }
     },
     ready: function () {

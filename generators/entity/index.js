@@ -390,7 +390,7 @@ module.exports = EntityGenerator.extend({
             }
             this.fs.writeJSON(this.filename, this.data, null, 4);
         },
-
+        
         loadInMemoryData: function () {
             var entityNameSpinalCased = _.kebabCase(_.lowerFirst(this.name));
             var entityNamePluralizedAndSpinalCased = _.kebabCase(_.lowerFirst(pluralize(this.name)));
@@ -402,6 +402,7 @@ module.exports = EntityGenerator.extend({
             this.entityInstance = _.lowerFirst(this.name);
             this.entityInstanceUp = this.name.toUpperCase();
             this.entityInstanceKebab = _.kebabCase(this.name);
+            this.entityInstanceSnake = _.snakeCase(this.name);
             this.entityInstancePlural = pluralize(this.entityInstance);
             this.entityApiUrl = entityNamePluralizedAndSpinalCased;
             this.entityFolderName = entityNameSpinalCased;
@@ -782,7 +783,8 @@ module.exports = EntityGenerator.extend({
                         entityTableName: this.entityTableName,
                         entityInstance: this.entityInstance,
                         entityInstanceKebab:this.entityInstanceKebab,
-                        entityInstanceUp: this.entityInstance.toUpperCase(),
+                            entityInstanceUnder:this.entityInstanceUnder,
+                    entityInstanceUp: this.entityInstance.toUpperCase(),
                         entityFolderName: this.entityFolderName,
                         entityFileName: this.entityFileName,
                         entityServiceFileName: this.entityServiceFileName,
