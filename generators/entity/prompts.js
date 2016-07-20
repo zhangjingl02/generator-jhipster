@@ -22,7 +22,8 @@ module.exports = {
     askForRelationsToRemove,
     askForDTO,
     askForService,
-    askForPagination
+    askForPagination,
+    askForPublicFields
 };
 
 function askForMicroserviceJson() {
@@ -124,6 +125,44 @@ function askForUpdate() {
 
     }.bind(this));
 }
+
+function askForPublicFields() {
+    // ask only if running an existing entity without arg option --force or --regenerate
+    var isForce = this.options['force'] || this.regenerate;
+    this.updateEntity = 'regenerate'; // default if skipping questions by --force
+    if (isForce || !this.useConfigurationFile) {
+        return;
+    }
+    var cb = this.async();
+    var prompts = [
+        {
+            type: 'list',
+            name: 'addCommonFields',
+            message: 'Do you want to update the entity? This will replace the existing files for this entity, all your custom code will be overwritten',
+            choices: [
+                {
+                    value: 'yes',
+                    name: 'Yes, add common fields in entity'
+                },
+                {
+                    value: 'none',
+                    name: 'don\'t add common field in enity'
+                }
+            ],
+            default: 0
+        }
+    ];
+    this.prompt(prompts, function (props) {
+        this.addComm = props.updateEntity;
+        if (this.updateEntity === 'none') {
+            this.env.error(chalk.green('Aborting entity update, no changes were made.'));
+        }
+        cb();
+
+    }.bind(this));
+}
+
+
 
 function askForFields() {
     // don't prompt if data is imported from a file

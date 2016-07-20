@@ -364,6 +364,15 @@ module.exports = EntityGenerator.extend({
             if (!this.useConfigurationFile && (this.databaseType === 'sql' || this.databaseType === 'cassandra')) {
                 this.changelogDate = this.dateFormatForLiquibase();
             }
+            this.fields.push({
+                "fieldName": "creator",
+                "fieldType": "Long",
+            });
+
+            this.fields.push({
+                "fieldName": "companyId",
+                "fieldType": "Long",
+            });
             this.data = {};
             this.data.relationships = this.relationships;
             this.data.fields = this.fields;
@@ -390,7 +399,7 @@ module.exports = EntityGenerator.extend({
             }
             this.fs.writeJSON(this.filename, this.data, null, 4);
         },
-        
+
         loadInMemoryData: function () {
             var entityNameSpinalCased = _.kebabCase(_.lowerFirst(this.name));
             var entityNamePluralizedAndSpinalCased = _.kebabCase(_.lowerFirst(pluralize(this.name)));
